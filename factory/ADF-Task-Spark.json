@@ -1,0 +1,9 @@
+{
+	"name": "ADF-Task-Spark",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "0d07de94-a0e0-4cc3-9c7f-f89e22fa2567",
+		"tenantId": "502d4607-84fc-4f5f-9bb7-aaa90af64123"
+	}
+}

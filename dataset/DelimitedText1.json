@@ -1,0 +1,60 @@
+{
+	"name": "DelimitedText1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "titlebasics.tsv",
+				"container": "databasemovies"
+			},
+			"columnDelimiter": "\t",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "tconst",
+				"type": "String"
+			},
+			{
+				"name": "titleType",
+				"type": "String"
+			},
+			{
+				"name": "primaryTitle",
+				"type": "String"
+			},
+			{
+				"name": "originalTitle",
+				"type": "String"
+			},
+			{
+				"name": "isAdult",
+				"type": "String"
+			},
+			{
+				"name": "startYear",
+				"type": "String"
+			},
+			{
+				"name": "endYear",
+				"type": "String"
+			},
+			{
+				"name": "runtimeMinutes",
+				"type": "String"
+			},
+			{
+				"name": "genres",
+				"type": "String"
+			}
+		]
+	}
+}

@@ -45,13 +45,13 @@
 					"name": "select2"
 				},
 				{
-					"name": "rank1"
+					"name": "sort1"
+				},
+				{
+					"name": "surrogateKey1"
 				},
 				{
 					"name": "filter3"
-				},
-				{
-					"name": "sort1"
 				}
 			],
 			"scriptLines": [
@@ -100,12 +100,12 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
-				"select2 rank(desc(averageRating, true),",
-				"     output(rank as long),",
-				"     dense: true) ~> rank1",
-				"rank1 filter(rank <= 100) ~> filter3",
-				"filter3 sort(desc(averageRating, true)) ~> sort1",
-				"sort1 sink(allowSchemaDrift: true,",
+				"select2 sort(desc(averageRating, true)) ~> sort1",
+				"sort1 keyGenerate(output(rank1 as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1",
+				"surrogateKey1 filter(rank1<=100) ~> filter3",
+				"filter3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
 				"     skipDuplicateMapInputs: true,",

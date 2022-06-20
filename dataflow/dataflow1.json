@@ -52,6 +52,9 @@
 				},
 				{
 					"name": "filter3"
+				},
+				{
+					"name": "select3"
 				}
 			],
 			"scriptLines": [
@@ -105,7 +108,16 @@
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> surrogateKey1",
 				"surrogateKey1 filter(rank1<=100) ~> filter3",
-				"filter3 sink(allowSchemaDrift: true,",
+				"filter3 select(mapColumn(",
+				"          primaryTitle,",
+				"          startYear,",
+				"          tconst,",
+				"          averageRating,",
+				"          numVotes",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select3",
+				"select3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
 				"     skipDuplicateMapInputs: true,",

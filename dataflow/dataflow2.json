@@ -58,9 +58,6 @@
 				},
 				{
 					"name": "select3"
-				},
-				{
-					"name": "sort2"
 				}
 			],
 			"scriptLines": [
@@ -124,8 +121,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select3",
-				"select3 sort(desc(averageRating, true)) ~> sort2",
-				"sort2 sink(allowSchemaDrift: true,",
+				"select3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
 				"     partitionFileNames:['Top100Last10'],",

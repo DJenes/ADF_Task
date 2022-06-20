@@ -13,14 +13,22 @@
 				"fileName": "titlerating.tsv",
 				"container": "databasemovies"
 			},
-			"columnDelimiter": ",",
+			"columnDelimiter": "\t",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
 		"schema": [
 			{
-				"name": "tconst\taverageRating\tnumVotes",
+				"name": "tconst",
+				"type": "String"
+			},
+			{
+				"name": "averageRating",
+				"type": "String"
+			},
+			{
+				"name": "numVotes",
 				"type": "String"
 			}
 		]

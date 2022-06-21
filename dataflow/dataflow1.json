@@ -74,7 +74,7 @@
 				"     ignoreNoFilesFound: false) ~> source1",
 				"source(output(",
 				"          tconst as string,",
-				"          averageRating as float,",
+				"          averageRating as double,",
 				"          numVotes as integer",
 				"     ),",
 				"     allowSchemaDrift: true,",

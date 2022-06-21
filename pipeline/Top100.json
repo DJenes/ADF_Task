@@ -1,9 +1,9 @@
 {
-	"name": "pipeline1",
+	"name": "Top100",
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "Top100",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {

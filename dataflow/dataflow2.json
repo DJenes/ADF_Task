@@ -118,7 +118,7 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select3",
 				"select3 sink(allowSchemaDrift: false,",
-				"     validateSchema: true,",
+				"     validateSchema: false,",
 				"     format: 'parquet',",
 				"     partitionFileNames:['Top100Last10'],",
 				"     skipDuplicateMapInputs: true,",

@@ -1,0 +1,17 @@
+{
+	"name": "TitleRating",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "IMD",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": "title.ratings.tsv.gz"
+			}
+		}
+	}
+}

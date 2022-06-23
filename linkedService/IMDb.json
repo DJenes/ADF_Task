@@ -1,0 +1,12 @@
+{
+	"name": "IMDb",
+	"properties": {
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://datasets.imdbws.com/title.basics.tsv.gz",
+			"enableServerCertificateValidation": false,
+			"authenticationType": "Anonymous"
+		}
+	}
+}

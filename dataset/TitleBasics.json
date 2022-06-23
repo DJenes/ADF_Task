@@ -1,5 +1,5 @@
 {
-	"name": "IMDbDataset1",
+	"name": "TitleBasics",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "IMD",
@@ -19,7 +19,8 @@
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
-				"type": "HttpServerLocation"
+				"type": "HttpServerLocation",
+				"relativeUrl": "title.basics.tsv.gz"
 			}
 		}
 	}

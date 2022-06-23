@@ -9,14 +9,14 @@
 						"referenceName": "GetFromBlob",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "TitleBasics"
 				},
 				{
 					"dataset": {
 						"referenceName": "GetFromBlob",
 						"type": "DatasetReference"
 					},
-					"name": "source2"
+					"name": "TitleRatings"
 				}
 			],
 			"sinks": [
@@ -25,36 +25,36 @@
 						"referenceName": "Parquet1",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "SaveParquet"
 				}
 			],
 			"transformations": [
 				{
-					"name": "filter1"
+					"name": "GetOnlyMovies"
 				},
 				{
-					"name": "select1"
+					"name": "DropUnusedColumns"
 				},
 				{
-					"name": "filter2"
+					"name": "GetPopularMovies"
 				},
 				{
-					"name": "join1"
+					"name": "JoinOnTconst"
 				},
 				{
-					"name": "select2"
+					"name": "DropTconst"
 				},
 				{
-					"name": "sort1"
+					"name": "SortDescAvrRating"
 				},
 				{
 					"name": "surrogateKey1"
 				},
 				{
-					"name": "filter3"
+					"name": "Get100Titles"
 				},
 				{
-					"name": "select3"
+					"name": "DropRankColumn"
 				}
 			],
 			"scriptLines": [
@@ -72,7 +72,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
-				"     wildcardPaths:['title.basics.tsv.gz']) ~> source1",
+				"     wildcardPaths:['title.basics.tsv.gz']) ~> TitleBasics",
 				"source(output(",
 				"          tconst as string,",
 				"          averageRating as double,",
@@ -81,36 +81,36 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
-				"     wildcardPaths:['title.ratings.tsv.gz']) ~> source2",
-				"source1 filter(titleType== \"movie\") ~> filter1",
-				"filter1 select(mapColumn(",
+				"     wildcardPaths:['title.ratings.tsv.gz']) ~> TitleRatings",
+				"TitleBasics filter(titleType== \"movie\") ~> GetOnlyMovies",
+				"GetOnlyMovies select(mapColumn(",
 				"          tconst,",
 				"          primaryTitle,",
 				"          startYear",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
-				"source2 filter(numVotes>100000) ~> filter2",
-				"select1, filter2 join(select1@tconst == source2@tconst,",
+				"     skipDuplicateMapOutputs: true) ~> DropUnusedColumns",
+				"TitleRatings filter(numVotes>100000) ~> GetPopularMovies",
+				"DropUnusedColumns, GetPopularMovies join(Drop unuesed columns@tconst == TitleRatings@tconst,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1",
-				"join1 select(mapColumn(",
+				"     broadcast: 'auto')~> JoinOnTconst",
+				"JoinOnTconst select(mapColumn(",
 				"          primaryTitle,",
 				"          startYear,",
-				"          tconst = source2@tconst,",
+				"          tconst = TitleRatings@tconst,",
 				"          averageRating,",
 				"          numVotes",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2",
-				"select2 sort(desc(averageRating, true)) ~> sort1",
-				"sort1 keyGenerate(output(rank1 as long),",
+				"     skipDuplicateMapOutputs: true) ~> DropTconst",
+				"DropTconst sort(desc(averageRating, true)) ~> SortDescAvrRating",
+				"SortDescAvrRating keyGenerate(output(rank1 as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> surrogateKey1",
-				"surrogateKey1 filter(rank1<=100) ~> filter3",
-				"filter3 select(mapColumn(",
+				"surrogateKey1 filter(rank1<=100) ~> Get100Titles",
+				"Get100Titles select(mapColumn(",
 				"          primaryTitle,",
 				"          startYear,",
 				"          tconst,",
@@ -118,14 +118,14 @@
 				"          numVotes",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select3",
-				"select3 sink(allowSchemaDrift: true,",
+				"     skipDuplicateMapOutputs: true) ~> DropRankColumn",
+				"DropRankColumn sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
 				"     partitionFileNames:['Top100'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> sink1"
+				"     partitionBy('hash', 1)) ~> SaveParquet"
 			]
 		}
 	}

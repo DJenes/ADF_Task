@@ -6,14 +6,14 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "TitleBasics",
+						"referenceName": "GetFromBlob",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
 				},
 				{
 					"dataset": {
-						"referenceName": "TitleRatings",
+						"referenceName": "GetFromBlob",
 						"type": "DatasetReference"
 					},
 					"name": "source2"
@@ -63,15 +63,16 @@
 				"          titleType as string,",
 				"          primaryTitle as string,",
 				"          originalTitle as string,",
-				"          isAdult as string,",
-				"          startYear as string,",
+				"          isAdult as boolean,",
+				"          startYear as integer,",
 				"          endYear as string,",
 				"          runtimeMinutes as string,",
 				"          genres as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
+				"     ignoreNoFilesFound: false,",
+				"     wildcardPaths:['title.basics.tsv.gz']) ~> source1",
 				"source(output(",
 				"          tconst as string,",
 				"          averageRating as double,",
@@ -79,7 +80,8 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source2",
+				"     ignoreNoFilesFound: false,",
+				"     wildcardPaths:['title.ratings.tsv.gz']) ~> source2",
 				"source1 filter(titleType== \"movie\") ~> filter1",
 				"filter1 select(mapColumn(",
 				"          tconst,",

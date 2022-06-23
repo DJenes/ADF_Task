@@ -1,0 +1,26 @@
+{
+	"name": "IMDbDataset1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "IMD",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TitleBasics": {
+				"type": "string",
+				"defaultValue": "title.basics.tsv.gz"
+			},
+			"TitleRating": {
+				"type": "string",
+				"defaultValue": "title.ratings.tsv.gz"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation"
+			}
+		}
+	}
+}
